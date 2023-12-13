@@ -70,10 +70,10 @@ Restart the NFS kernel server to apply the configuration changes
 sudo systemctl restart nfs-kernel-server
 
 Deploy NFS client on worker nodes
-'''
+```
 sudo apt update
 sudo apt install nfs-common
-'''
+```
 ===========
 
 Deployment for mysql application
