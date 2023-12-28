@@ -27,14 +27,20 @@ Step 4: Create a cluster role binding to the service account Sandry and give acc
 ```
 kubectl create clusterrolebinding sandry-access --serviceaccount=cep-project1:sandry --clusterrole=cluster-admin
 ```
-Prepare worker-node-1 to be NFS server and worker nodes to be the NFS client
+Step 5: Token and login 
+```
+kubectl create token sandry -n cep-project1
+```
+Step 6: ResourcesQuota
+
+Step 7: Prepare worker-node-1 to be NFS server and worker nodes to be the NFS client
 
 NFS server on worker-Node-1:
 
 Execute below steps on worker-node-1:
 
 ```
-sudo mkdir /data
+sudo mkdir /mysql
 ```
 
 Install the NFS kernel server on the machine
@@ -46,11 +52,11 @@ sudo apt install nfs-kernel-server
 Change the owner user and group to nobody and nogroup
 ...
 ```
-sudo chown nobody:nogroup /data/
+sudo chown nobody:nogroup /mysql/
 ```
 Set permissions to 777 to allow everyone to read, write, and execute files in this directory
 ```
-sudo chmod 777 /data/
+sudo chmod 777 /mysql/
 ```
 
 Open the exports file in the /etc directory for permission to access the host server machine
@@ -61,7 +67,7 @@ sudo vi /etc/exports
 ```
 Add the following code to the file:
 ```
-/data *(rw,sync,no_root_squash)
+/mysql *(rw,sync,no_root_squash)
 ```
 Note: Exit the file and save the changes
 
@@ -84,7 +90,7 @@ sudo apt update
 sudo apt install nfs-common
 ```
 ===========
-
+Step 8:
 Deployment for mysql application
 ```
 kubectl apply -f mysql
